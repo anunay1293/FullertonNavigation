@@ -1,0 +1,25 @@
+Starbucks , 33.8602673 , -117.942165
+Intentional Coffee , 33.8594643 , -117.959585
+The Stinger Cafe , 33.8759195 , -117.9184156
+Santa Fe Express Cafe , 33.8688327 , -117.9222757
+Donut Star , 33.8742546 , -117.9065236
+7 Leaves Cafe , 33.8747911 , -117.8900264
+Jay's Coffee Waffles & More , 33.8777335 , -117.8817537
+Coffee Code , 33.8932053 , -117.9453663
+The Night Owl , 33.8715158 , -117.9241332
+Dripp , 33.8741068 , -117.9238354
+Max Bloom's Cafe Noir , 33.8717513 , -117.9263648
+McClain's Coffeehouse , 33.8781235 , -117.9246204
+The Brownstone Cafe , 33.8727734 , -117.9247445
+Green Bliss Cafe , 33.8725624 , -117.9247526
+Pilgrim's Coffee Shop , 33.8722445 , -117.9255441
+The Smoking Tiger Coffee and Bread , 33.8722658 , -117.9246791
+Made Coffee , 33.8715316 , -117.9248053
+Library Cafe , 33.8707809 , -117.9301023
+Veronese Gallery and Cafe , 33.8704891 , -117.932277
+525 Coffee Co , 33.8704272 , -117.9342622
+The Boba Place , 33.894247 , -117.9305424
+Eggspresso , 33.894093 , -117.9304796
+The Coffee Bean & Tea Leaf , 33.8584183 , -117.9216244
+Sharetea , 33.8755283 , -117.8882608
+Kawaii Boba , 33.8587351 , -117.9248864

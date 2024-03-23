@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help- Fullerton Cafes</title>
+    <style>
+        body, html {
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+                background-image: url('{{ url_for("static", filename="images/pattern13.jpg") }}');
+            }
+        #top-bar {
+            background-color: #121517;
+            padding: 10px;
+            text-align: left;
+        }
+
+        #top-bar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+ 
+
+         .group-section {
+               display: flex;
+               justify-content: space-around;
+               align-items: center;
+               padding: 20px;
+               margin-top: 50px; /* Add margin to the top */
+               margin-bottom: 30px; /* Add margin to the bottom */
+        }
+
+        .group-icon img {
+               max-width: 500px; /* Adjust the size as needed */
+               height: auto;
+        }
+
+        .mission-statement {
+               max-width: 600px; /* Adjust the width as needed */
+               text-align: left;
+               color: white;
+        }
+
+        #top-bar a:hover {
+            background-color: #2ecc71;
+        }
+
+        .team-members {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 250px; /* Add margin to the top */
+    margin-bottom: 50px; /* Add margin to the bottom */
+}
+
+
+      
+        .mission-statement h2 {
+    font-weight: bold;
+}
+.mission-statement {
+   font-size: 20px;
+}
+
+
+    </style>
+</head>
+<body>
+    <div id="top-bar">
+        <a href="/">Home</a>
+        <a href="/about">About Us</a>
+        <!-- Add more links as needed -->
+    </div>
+    <div class="group-section">
+        <div class="group-icon">
+            <img src="{{ url_for('static', filename='images/icon.jpg') }}" alt="Group Icon">
+        </div>
+        <div class="mission-statement">
+            <h2>Mission Statement</h2>
+            <p>Our website employs the Floyd-Warshall algorithm to meticulously calculate and showcase the shortest paths between local cafes.</p>
+            <p><a href="https://github.com/angelicacabato/CPSC535_Group1_Project2/tree/update" class="github-link">GitHub link</a></p>
+            <p>working video:</p>
+            <video width="500" height="500" controls>
+                <source src="{{ url_for('static', filename='images/video.mp4') }}" type="video/mp4">
+                
+            </video>
+        </div>
+    </div>
+    
+
+
+</body>
+</html>

@@ -1,0 +1,172 @@
+Node ID: 4704306820
+Node Data: {'y': 33.8724053, 'x': -117.9252113, 'street_count': 1}
+name Pilgrim's Coffee Shop
+
+Node ID: 1391863431
+Node Data: {'y': 33.8689744, 'x': -117.9220517, 'street_count': 1}
+name Santa Fe Express Cafe
+
+Node ID: 122562954
+Node Data: {'y': 33.8775051, 'x': -117.881143, 'highway': 'motorway_junction', 'street_count': 3}
+name Jay's Coffee Waffles & More
+
+Node ID: 2243492748
+Node Data: {'y': 33.8594633, 'x': -117.9243664, 'street_count': 4}
+name Kawaii Boba
+
+Node ID: 2243492752
+Node Data: {'y': 33.8610666, 'x': -117.9243402, 'street_count': 4}
+name Starbucks
+
+Node ID: 67543057
+Node Data: {'y': 33.8592067, 'x': -117.9593143, 'highway': 'traffic_signals', 'street_count': 4}
+name Intentional Coffee
+
+Node ID: 8816967697
+Node Data: {'y': 33.917326, 'x': -117.9309571, 'street_count': 3}
+name Starbucks
+
+Node ID: 122836756
+Node Data: {'y': 33.8783934, 'x': -117.9243378, 'street_count': 3}
+name McClain's Coffeehouse
+
+Node ID: 5197254171
+Node Data: {'y': 33.8713598, 'x': -117.9303134, 'street_count': 2}
+name Library Cafe
+
+Node ID: 122757283
+Node Data: {'y': 33.8742214, 'x': -117.8896263, 'highway': 'traffic_signals', 'street_count': 4}
+name Philz Coffee
+
+Node ID: 414550180
+Node Data: {'y': 33.8823303, 'x': -117.8803315, 'street_count': 3}
+name The Gastronome
+
+Node ID: 3583764518
+Node Data: {'y': 33.8781786, 'x': -117.8860052, 'street_count': 3}
+name Starbucks
+
+Node ID: 1931779371
+Node Data: {'y': 33.8785603, 'x': -117.8828092, 'street_count': 2}
+name Starbucks
+
+Node ID: 122925745
+Node Data: {'y': 33.8713827, 'x': -117.9265297, 'street_count': 4}
+name Max Bloom's Cafe Noir
+
+Node ID: 4083327025
+Node Data: {'y': 33.8764377, 'x': -117.889646, 'street_count': 3}
+name Sharetea
+
+Node ID: 2243418547
+Node Data: {'y': 33.8834719, 'x': -117.924958, 'street_count': 3}
+name Starbucks
+
+Node ID: 122817213
+Node Data: {'y': 33.8594157, 'x': -117.9220249, 'highway': 'traffic_signals', 'street_count': 3}
+name The Coffee Bean & Tea Leaf
+
+Node ID: 2574034240
+Node Data: {'y': 33.873459, 'x': -117.9243368, 'street_count': 3}
+name Starbucks
+
+Node ID: 122628045
+Node Data: {'y': 33.874103, 'x': -117.9070468, 'highway': 'traffic_signals', 'street_count': 4}
+name Donut Star
+
+Node ID: 122731859
+Node Data: {'y': 33.870275, 'x': -117.934968, 'street_count': 3}
+name 525 Coffee Co
+
+Node ID: 122628569
+Node Data: {'y': 33.8702906, 'x': -117.9330628, 'highway': 'traffic_signals', 'street_count': 4}
+name Veronese Gallery and Cafe
+
+Node ID: 122868068
+Node Data: {'y': 33.893419, 'x': -117.9456614, 'street_count': 3}
+name Coffee Code
+
+Node ID: 2243433066
+Node Data: {'y': 33.8724057, 'x': -117.9243853, 'highway': 'traffic_signals', 'street_count': 3}
+name The Smoking Tiger Coffee and Bread
+
+Node ID: 67543020
+Node Data: {'y': 33.8593389, 'x': -117.941829, 'highway': 'traffic_signals', 'street_count': 4}
+name Starbucks
+
+Node ID: 1853024624
+Node Data: {'y': 33.8935095, 'x': -117.9444321, 'street_count': 3}
+name Starbucks
+
+Node ID: 2325177846
+Node Data: {'y': 33.8713938, 'x': -117.924322, 'highway': 'traffic_signals', 'street_count': 5}
+name Made Coffee
+
+Node ID: 122900858
+Node Data: {'y': 33.8939054, 'x': -117.9302246, 'street_count': 3}
+name Eggspresso
+
+Node ID: 122757243
+Node Data: {'y': 33.8739266, 'x': -117.9243324, 'highway': 'traffic_signals', 'street_count': 4}
+name Dripp
+
+Node ID: 122728319
+Node Data: {'y': 33.8759602, 'x': -117.919119, 'street_count': 1}
+name The Stinger Cafe
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

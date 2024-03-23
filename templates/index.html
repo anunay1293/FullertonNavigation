@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fullerton Cafes</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+            body, html {
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+                background-image: url('{{ url_for("static", filename="images/pattern13.jpg") }}');
+            }
+
+            #map {
+                width: 80%;
+                height: 400px;
+                padding: 20px;
+                margin: 100px auto 0; /* Top margin added */
+            }
+
+            .navigation-panel {
+                text-align: center;
+                margin-top: 30px; /* Top margin added */
+            }
+            .navigation-panel select {
+                background-color: #3498db;
+                color: white;
+                padding: 10px;
+                border: none;
+                border-radius: 5px;
+                margin-right: 10px;
+            }
+
+            .navigation-panel button {
+                background-color: #3498db;
+                color: white;
+                padding: 10px 20px;
+                border-radius: 20px; 
+                border: none;
+                cursor: pointer;
+                margin-right: 10px;
+            }
+
+            .navigation-panel select:hover,
+            .navigation-panel button:hover {
+                background-color: #2980b9;
+            }
+            .banner {
+                background-color: #3498db;
+                color: white;
+                text-align: center;
+                padding: 10px;
+                font-size: 24px;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+
+            #top-bar {
+            /* background-color: #121517; */
+            padding: 10px;
+            text-align: left;
+            margin-top: 20px; /* Corrected: removed the space between '20' and 'px' */
+        }
+
+        #top-bar {
+            /* background-color: #121517; */
+            padding: 10px;
+            text-align: left;
+            margin-top: 0px;
+        }
+
+        #top-bar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+
+        #top-bar a:hover {
+            background-color: #2ecc71; 
+        }
+
+
+        .overlay {
+            position: fixed; /* Cover the whole page */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+            z-index: 999; /* Ensure it sits below the spinner but above everything else */
+            display: none; /* Hidden by default */
+        }
+
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border-left-color: #09f;
+            animation: spin 1s ease infinite;
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 50%;
+            top: 50%;
+            margin: -20px 0 0 -20px; /* Location of the spinner */
+            display: none; /* Hidden by default */
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        Fullerton Cafes
+    </div>
+            <div id="top-bar">
+                <a href="#home">Home</a>
+                <a href="/about">Help</a>    
+            </div>
+    <div id="loading-spinner" class="loading-spinner"></div>
+    <div id="overlay" class="overlay"></div>
+    <div id="map"></div>
+    <div class="navigation-panel">
+        <select id="source"></select>
+        <select id="destination"></select>
+        <button id="calculate-path">Calculate Shortest Path</button>
+        <button id="report-blockage">Report Blockage</button>
+        <button id="refresh">Refresh</button>
+    </div>
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script>
+    var cafeLocations = {}; // Object to store cafe names and their locations
+    var map = L.map('map').setView([33.8704, -117.9242], 13);
+    var polyline;
+    var sourceMarker, destinationMarker; // Markers for source and destination
+    var currentMarker;// Global variable to keep track of the current marker
+    var allMarkers = []; // Initialized an empty array to store all markers
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    function addMarkersForCafes() {
+            for (var cafeName in cafeLocations) {
+                var location = cafeLocations[cafeName];
+                var marker = L.marker([location.lat, location.lng]).addTo(map);
+                allMarkers.push(marker); 
+        }
+        showLoadingSpinner(false); 
+    }
+
+    var currentMarker;// Global variable to keep track of the current marker
+
+    function showLoadingSpinner(show) {
+        var displayStyle = show ? 'block' : 'none';
+        document.getElementById('loading-spinner').style.display = displayStyle;
+        document.getElementById('overlay').style.display = displayStyle; // Show/hide the overlay with the spinner
+    }
+
+    function removeAllMarkers() {
+        for (var i = 0; i < allMarkers.length; i++) {
+            map.removeLayer(allMarkers[i]);
+        }
+        allMarkers = [];
+    }
+
+    function fetchCafesAndPopulateDropdowns() {
+        showLoadingSpinner(true); // Show the spinner when starting to fetch
+        fetch('/get_cafes')
+            .then(response => response.json())
+            .then(data => {
+                const sourceSelect = document.getElementById('source');
+                const destinationSelect = document.getElementById('destination');
+
+
+                data.cafes.forEach(cafe => {
+                    let option1 = new Option(cafe.name, cafe.name); // Use cafe name as value
+                    let option2 = new Option(cafe.name, cafe.name); // Repeat for destination
+
+                    sourceSelect.add(option1);
+                    destinationSelect.add(option2);
+
+                    // Store cafe location using the cafe name as the key
+                    cafeLocations[cafe.name] = {lat: cafe.lat, lng: cafe.lng};
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching cafe data:', error);
+            })
+            .finally(() => {
+                addMarkersForCafes(); 
+            showLoadingSpinner(false); // Hide the spinner regardless of success or error
+        });
+
+    }
+
+    // Event listener for the source dropdown selection
+    document.getElementById('source').addEventListener('change', function() {
+        var cafeName = this.value;
+        var location = cafeLocations[cafeName];
+        if (location) {
+            map.setView([location.lat, location.lng], 15); // Adjust zoom level as needed
+            removeAllMarkers();
+            // Check if there's already a marker on the map and remove it
+            if (currentMarker) {
+                map.removeLayer(currentMarker);
+            }
+
+            // Create a new marker and add it to the map
+            currentMarker = L.marker([location.lat, location.lng]).addTo(map);
+        }
+    });
+
+    // Event listener for the destination dropdown selection
+    document.getElementById('destination').addEventListener('change', function() {
+        var cafeName = this.value;
+        var location = cafeLocations[cafeName];
+        if (location) {
+            map.setView([location.lat, location.lng], 15); // Adjust zoom level as needed
+            removeAllMarkers();
+                        // Check if there's already a marker on the map and remove it
+            if (currentMarker) {
+                map.removeLayer(currentMarker);
+            }
+
+            // Create a new marker and add it to the map
+            currentMarker = L.marker([location.lat, location.lng]).addTo(map);
+        }
+    });
+
+    // Event listener for the source dropdown selection
+    document.getElementById('source').addEventListener('change', function() {
+        updateMapAndMarker(this.value);
+    });
+
+    // Event listener for the destination dropdown selection
+    document.getElementById('destination').addEventListener('change', function() {
+        updateMapAndMarker(this.value);
+    });
+
+    document.getElementById('calculate-path').addEventListener('click', function() {
+        const sourceName = document.getElementById('source').value;
+        const destinationName = document.getElementById('destination').value;
+        const source = cafeLocations[sourceName];
+        const destination = cafeLocations[destinationName];
+
+        showLoadingSpinner(true); // Show spinner
+
+        if (sourceName === destinationName) {
+            alert("Please select a different destination.");
+            showLoadingSpinner(false); // Hide spinner since we're not proceeding
+            return; // Exit the function without making the request
+        }
+        
+        if (source && destination) {
+            fetch('/calculate_path', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({source: sourceName, destination: destinationName}),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (polyline) {
+                    map.removeLayer(polyline);
+                }
+                polyline = L.polyline(data.path.map(point => [point[0], point[1]]), {color: 'blue'}).addTo(map);
+                map.fitBounds(polyline.getBounds());
+
+                // Remove existing markers if they exist
+                if (sourceMarker) {
+                    map.removeLayer(sourceMarker);
+                }
+                if (destinationMarker) {
+                    map.removeLayer(destinationMarker);
+                }
+
+                // Add source and destination markers
+                sourceMarker = L.marker([source.lat, source.lng]).addTo(map);
+                destinationMarker = L.marker([destination.lat, destination.lng]).addTo(map);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            })
+            .finally(() => {
+            showLoadingSpinner(false); // Hide the spinner regardless of success or error
+        });
+        } else {
+            console.error('Invalid source or destination');
+        }
+        
+    });
+
+    document.getElementById('refresh').addEventListener('click', function() {
+        showLoadingSpinner(true);
+        setTimeout(function() {
+        window.location.reload(); // Reloads the current page
+    }, 100); 
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+    showLoadingSpinner(true);
+    fetchCafesAndPopulateDropdowns();
+});
+
+// Add this function for handling the "Report Blockage" button click
+document.getElementById('report-blockage').addEventListener('click', function() {
+        const sourceName = document.getElementById('source').value;
+        const destinationName = document.getElementById('destination').value;
+
+        showLoadingSpinner(true); // Show spinner
+        
+        if (sourceName === destinationName) {
+            alert("Please report valid blockage");
+            showLoadingSpinner(false); // Hide spinner since we're not proceeding
+            return; // Exit the function without making the request
+        }
+
+        // Set blockage to true when sending the request
+        fetch('/calculate_path', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                source: sourceName,
+                destination: destinationName,
+                blockage: true // Indicate a blockage in the path
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (polyline) {
+                map.removeLayer(polyline);
+            }
+            polyline = L.polyline(data.path.map(point => [point[0], point[1]]), {color: 'red'}).addTo(map);
+            map.fitBounds(polyline.getBounds());
+
+            // Remove existing markers if they exist
+            if (sourceMarker) {
+                map.removeLayer(sourceMarker);
+            }
+            if (destinationMarker) {
+                map.removeLayer(destinationMarker);
+            }
+
+            // Add source and destination markers for the new path
+            sourceMarker = L.marker([cafeLocations[sourceName].lat, cafeLocations[sourceName].lng]).addTo(map);
+            destinationMarker = L.marker([cafeLocations[destinationName].lat, cafeLocations[destinationName].lng]).addTo(map);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        })
+        .finally(() => {
+            showLoadingSpinner(false); // Hide the spinner regardless of success or error
+        });
+    });
+</script>
+</body>
+</html>
