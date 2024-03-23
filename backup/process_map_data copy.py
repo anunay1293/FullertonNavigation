@@ -1,11 +1,4 @@
-"""
-GROUP 1: Anunay Amrit, Angelica Cabato, Pranav Vijay Chand, Riya Chapatwala, Sai Satya Jagannadh Doddipatla, Nhat Ho
 
-Dr. Shah
-
-CPSC 535: Advanced Algorithms (Spring 2024)
-
-"""
 
 # Reference Option #1: https://www.geeksforgeeks.org/working-with-geospatial
 # -data-in-python/
